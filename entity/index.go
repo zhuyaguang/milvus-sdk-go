@@ -35,6 +35,8 @@ const (
 	IvfSQ8H    IndexType = "IVF_SQ8_HYBRID"
 	NSG        IndexType = "NSG"
 	HNSW       IndexType = "HNSW"
+	HNSW2      IndexType = "HNSW2"
+	NANG      IndexType = "NANG"
 	RHNSWFlat  IndexType = "RHNSW_FLAT"
 	RHNSWPQ    IndexType = "RHNSW_PQ"
 	RHNSWSQ    IndexType = "RHNSW_SQ"

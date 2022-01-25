@@ -52,9 +52,13 @@ func (c *grpcClient) CreateIndex(ctx context.Context, collName string, fieldName
 	if c.service == nil {
 		return ErrClientNotReady
 	}
+	fmt.Println("1111111111")
+
 	if err := c.checkCollField(ctx, collName, fieldName); err != nil {
 		return err
 	}
+	fmt.Println("2222222222")
+
 
 	req := &server.CreateIndexRequest{
 		DbName:         "", // reserved
@@ -62,13 +66,20 @@ func (c *grpcClient) CreateIndex(ctx context.Context, collName string, fieldName
 		FieldName:      fieldName,
 		ExtraParams:    entity.MapKvPairs(idx.Params()),
 	}
+
 	resp, err := c.service.CreateIndex(ctx, req)
 	if err != nil {
+		fmt.Println("=========")
 		return err
 	}
+	fmt.Println("33333333",resp)
+
 	if err = handleRespStatus(resp); err != nil {
+		fmt.Println(err.Error())
 		return err
 	}
+	fmt.Println("4444444444")
+
 	if !async { // sync mode, wait index building result
 		for {
 			is, err := c.GetIndexState(ctx, collName, fieldName)

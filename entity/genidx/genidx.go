@@ -643,6 +643,80 @@ func main() {
 					"ef = 32769",
 				},
 			},
+			// HNSW2
+			{
+				IdxName: "HNSW2",
+				IdxType: entity.HNSW2,
+				ConstructParams: []idxParam{
+					{
+						Name:           "M",
+						ValidationRule: "[4, 64]",
+					},
+					{
+						Name:           "efConstruction",
+						ValidationRule: "[8, 512]",
+					},
+				},
+				SearchParams: []idxParam{
+					{
+						Name:           "ef",
+						ValidationRule: "[1, 32768]", // [topK, 32768], refer to index construct param, not supported yet
+					},
+				},
+				ValidExamples: []string{
+					"M, efConstruction = 16, 40",
+				},
+				InvalidExamples: []string{
+					"M, efConstruction = 3, 40",
+					"M, efConstruction = 65, 40",
+					"M, efConstruction = 16, 7",
+					"M, efConstruction = 16, 513",
+				},
+				ValidSearchParams: []string{
+					"ef = 16",
+				},
+				InvalidSearchParams: []string{
+					"ef = 0",
+					"ef = 32769",
+				},
+			},
+			// NANG
+			{
+				IdxName: "NANG",
+				IdxType: entity.NANG,
+				ConstructParams: []idxParam{
+					{
+						Name:           "M",
+						ValidationRule: "[4, 64]",
+					},
+					{
+						Name:           "efConstruction",
+						ValidationRule: "[8, 512]",
+					},
+				},
+				SearchParams: []idxParam{
+					{
+						Name:           "ef",
+						ValidationRule: "[1, 32768]", // [topK, 32768], refer to index construct param, not supported yet
+					},
+				},
+				ValidExamples: []string{
+					"M, efConstruction = 16, 40",
+				},
+				InvalidExamples: []string{
+					"M, efConstruction = 3, 40",
+					"M, efConstruction = 65, 40",
+					"M, efConstruction = 16, 7",
+					"M, efConstruction = 16, 513",
+				},
+				ValidSearchParams: []string{
+					"ef = 16",
+				},
+				InvalidSearchParams: []string{
+					"ef = 0",
+					"ef = 32769",
+				},
+			},
 			// RHNSW_FLAT
 			{
 				IdxName: "RHNSWFlat",

@@ -264,6 +264,70 @@ func NewIndexRNSGSearchParam(
 	}, nil
 }
 
+var _ SearchParam = &IndexHNSW2SearchParam{}
+
+// IndexHNSW2SearchParam search param struct for index type HNSW2
+type IndexHNSW2SearchParam struct { //auto generated fields
+	ef int
+}
+
+// Params returns index construction params, implementing Index interface
+func(i *IndexHNSW2SearchParam) Params() map[string]interface{} {
+	return map[string]interface{} {//auto generated mapping
+		"ef": i.ef,
+	}
+}
+
+// NewIndexHNSW2SearchParam create index search param
+func NewIndexHNSW2SearchParam(
+	ef int,
+) (*IndexHNSW2SearchParam, error) {
+	// auto generate parameters validation code, if any
+	if ef < 1 {
+		return nil, errors.New("ef not valid")
+	}
+	if ef > 32768 {
+		return nil, errors.New("ef not valid")
+	}
+
+	return &IndexHNSW2SearchParam{
+		//auto generated setting
+		ef: ef,
+	}, nil
+}
+
+var _ SearchParam = &IndexNANGSearchParam{}
+
+// IndexNANGSearchParam search param struct for index type NANG
+type IndexNANGSearchParam struct { //auto generated fields
+	ef int
+}
+
+// Params returns index construction params, implementing Index interface
+func(i *IndexNANGSearchParam) Params() map[string]interface{} {
+	return map[string]interface{} {//auto generated mapping
+		"ef": i.ef,
+	}
+}
+
+// NewIndexNANGSearchParam create index search param
+func NewIndexNANGSearchParam(
+	ef int,
+) (*IndexNANGSearchParam, error) {
+	// auto generate parameters validation code, if any
+	if ef < 1 {
+		return nil, errors.New("ef not valid")
+	}
+	if ef > 32768 {
+		return nil, errors.New("ef not valid")
+	}
+
+	return &IndexNANGSearchParam{
+		//auto generated setting
+		ef: ef,
+	}, nil
+}
+
 var _ SearchParam = &IndexHNSWSearchParam{}
 
 // IndexHNSWSearchParam search param struct for index type HNSW
@@ -273,7 +337,7 @@ type IndexHNSWSearchParam struct { //auto generated fields
 
 // Params returns index construction params, implementing Index interface
 func(i *IndexHNSWSearchParam) Params() map[string]interface{} {
-	return map[string]interface{} {//auto generated mapping 
+	return map[string]interface{} {//auto generated mapping
 		"ef": i.ef,
 	}
 }
@@ -289,8 +353,8 @@ func NewIndexHNSWSearchParam(
 	if ef > 32768 {
 		return nil, errors.New("ef not valid")
 	}
-	
-	return &IndexHNSWSearchParam{ 
+
+	return &IndexHNSWSearchParam{
 	//auto generated setting
 	ef: ef,
 	}, nil

@@ -4,8 +4,8 @@
 package entity
 
 import (
-	"errors"
 	"encoding/json"
+	"errors"
 	"fmt"
 )
 
@@ -587,6 +587,159 @@ func NewIndexHNSW(metricType MetricType,
 	}, nil
 }
 
+var _ Index = &IndexNANG{}
+
+// IndexNANG idx type for NANG
+type IndexNANG struct { //auto generated fields
+	//M int
+	//efConstruction int
+	K int
+	L int
+	iter int
+	S int
+	R int
+	RANGE int
+	PL int
+	B float32
+	M_NANG float32
+	search_L int
+	metricType MetricType
+}
+
+// Name returns index type name, implementing Index interface
+func(i *IndexNANG) Name() string {
+	return "NANG"
+}
+
+// IndexType returns IndexType, implementing Index interface
+func(i *IndexNANG) IndexType() IndexType {
+	return IndexType("NANG")
+}
+
+// SupportBinary returns whether index type support binary vector
+func(i *IndexNANG) SupportBinary() bool {
+	return 0 & 2 > 0
+}
+
+// Params returns index construction params, implementing Index interface
+func(i *IndexNANG) Params() map[string]string {
+	params := map[string]string {//auto generated mapping
+		"K": fmt.Sprintf("%v",i.K),
+		"L": fmt.Sprintf("%v",i.L),
+		"iter": fmt.Sprintf("%v",i.iter),
+		"S": fmt.Sprintf("%v",i.S),
+		"R": fmt.Sprintf("%v",i.R),
+		"RANGE": fmt.Sprintf("%v",i.RANGE),
+		"PL": fmt.Sprintf("%v",i.PL),
+		"B": fmt.Sprintf("%v",i.B),
+		"M_NANG": fmt.Sprintf("%v",i.M_NANG),
+		"search_L": fmt.Sprintf("%v",i.search_L),
+	}
+	bs, _ := json.Marshal(params)
+	return map[string]string {
+		"params": string(bs),
+		"index_type": string(i.IndexType()),
+		"metric_type": string(i.metricType),
+	}
+}
+
+// NewIndexNANG create index with contruction parameters
+func NewIndexNANG(metricType MetricType,
+	K int,
+	L int,
+	iter int,
+	S int,
+	R int,
+	RANGE int,
+	PL int,
+	B float32,
+	M_NANG float32,
+	search_L int,
+
+) (*IndexNANG, error) {
+
+	return &IndexNANG{
+		K: K,
+		L: L,
+		iter :iter,
+		S :S,
+		R :R,
+		RANGE :RANGE,
+		PL: PL,
+		B :B,
+		M_NANG :M_NANG,
+		search_L: search_L,
+		metricType: metricType,
+	}, nil
+}
+
+var _ Index = &IndexHNSW2{}
+
+// IndexHNSW2 idx type for HNSW2
+type IndexHNSW2 struct { //auto generated fields
+	M int
+	efConstruction int
+	metricType MetricType
+}
+
+// Name returns index type name, implementing Index interface
+func(i *IndexHNSW2) Name() string {
+	return "HNSW2"
+}
+
+// IndexType returns IndexType, implementing Index interface
+func(i *IndexHNSW2) IndexType() IndexType {
+	return IndexType("HNSW2")
+}
+
+// SupportBinary returns whether index type support binary vector
+func(i *IndexHNSW2) SupportBinary() bool {
+	return 0 & 2 > 0
+}
+
+// Params returns index construction params, implementing Index interface
+func(i *IndexHNSW2) Params() map[string]string {
+	params := map[string]string {//auto generated mapping
+		"M": fmt.Sprintf("%v",i.M),
+		"efConstruction": fmt.Sprintf("%v",i.efConstruction),
+	}
+	bs, _ := json.Marshal(params)
+	return map[string]string {
+		"params": string(bs),
+		"index_type": string(i.IndexType()),
+		"metric_type": string(i.metricType),
+	}
+}
+
+// NewIndexHNSW2 create index with contruction parameters
+func NewIndexHNSW2(metricType MetricType,
+	M int,
+
+	efConstruction int,
+) (*IndexHNSW2, error) {
+	// auto generate parameters validation code, if any
+	if M < 4 {
+		return nil, errors.New("M not valid")
+	}
+	if M > 64 {
+		return nil, errors.New("M not valid")
+	}
+
+	if efConstruction < 8 {
+		return nil, errors.New("efConstruction not valid")
+	}
+	if efConstruction > 512 {
+		return nil, errors.New("efConstruction not valid")
+	}
+
+	return &IndexHNSW2{
+		//auto generated setting
+		M: M,
+		//auto generated setting
+		efConstruction: efConstruction,
+		metricType: metricType,
+	}, nil
+}
 
 var _ Index = &IndexRHNSWFlat{}
 
