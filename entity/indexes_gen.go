@@ -4,8 +4,8 @@
 package entity
 
 import (
-	"errors"
 	"encoding/json"
+	"errors"
 	"fmt"
 )
 
@@ -587,6 +587,73 @@ func NewIndexHNSW(metricType MetricType,
 	}, nil
 }
 
+var _ Index = &IndexHNSW2{}
+
+// IndexHNSW2 idx type for HNSW2
+type IndexHNSW2 struct { //auto generated fields
+	M int
+	efConstruction int
+	metricType MetricType
+}
+
+// Name returns index type name, implementing Index interface
+func(i *IndexHNSW2) Name() string {
+	return "HNSW2"
+}
+
+// IndexType returns IndexType, implementing Index interface
+func(i *IndexHNSW2) IndexType() IndexType {
+	return IndexType("HNSW2")
+}
+
+// SupportBinary returns whether index type support binary vector
+func(i *IndexHNSW2) SupportBinary() bool {
+	return 0 & 2 > 0
+}
+
+// Params returns index construction params, implementing Index interface
+func(i *IndexHNSW2) Params() map[string]string {
+	params := map[string]string {//auto generated mapping
+		"M": fmt.Sprintf("%v",i.M),
+		"efConstruction": fmt.Sprintf("%v",i.efConstruction),
+	}
+	bs, _ := json.Marshal(params)
+	return map[string]string {
+		"params": string(bs),
+		"index_type": string(i.IndexType()),
+		"metric_type": string(i.metricType),
+	}
+}
+
+// NewIndexHNSW2 create index with contruction parameters
+func NewIndexHNSW2(metricType MetricType,
+	M int,
+
+	efConstruction int,
+) (*IndexHNSW2, error) {
+	// auto generate parameters validation code, if any
+	if M < 4 {
+		return nil, errors.New("M not valid")
+	}
+	if M > 64 {
+		return nil, errors.New("M not valid")
+	}
+
+	if efConstruction < 8 {
+		return nil, errors.New("efConstruction not valid")
+	}
+	if efConstruction > 512 {
+		return nil, errors.New("efConstruction not valid")
+	}
+
+	return &IndexHNSW2{
+		//auto generated setting
+		M: M,
+		//auto generated setting
+		efConstruction: efConstruction,
+		metricType: metricType,
+	}, nil
+}
 
 var _ Index = &IndexRHNSWFlat{}
 

@@ -334,6 +334,42 @@ func TestIndexHNSWSearchParam(t *testing.T) {
 	
 }
 
+func TestIndexHNSW2SearchParam(t *testing.T) {
+
+	var ef int
+
+	t.Run("valid usage case", func(t *testing.T){
+
+		ef = 16
+		idx0, err := NewIndexHNSW2SearchParam(
+			ef,
+		)
+		assert.Nil(t, err)
+		assert.NotNil(t, idx0)
+		assert.NotNil(t, idx0.Params())
+
+	})
+
+	t.Run("invalid usage case", func(t *testing.T){
+
+		ef = 0
+		idx0, err := NewIndexHNSW2SearchParam(
+			ef,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx0)
+
+		ef = 32769
+		idx1, err := NewIndexHNSW2SearchParam(
+			ef,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx1)
+
+	})
+
+}
+
 func TestIndexRHNSWFlatSearchParam(t *testing.T) {
 	
 	var ef int

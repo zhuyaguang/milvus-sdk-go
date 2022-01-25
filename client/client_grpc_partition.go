@@ -123,6 +123,7 @@ func (c *grpcClient) ShowPartitions(ctx context.Context, collName string) ([]*en
 		return []*entity.Partition{}, err
 	}
 	partitions := make([]*entity.Partition, 0, len(resp.GetPartitionIDs()))
+	fmt.Println("=====len ", resp.GetPartitionIDs(),resp.GetPartitionNames(),resp.GetInMemoryPercentages())
 	if len(resp.GetPartitionNames())==0 || len(resp.GetInMemoryPercentages())==0{
 		return  []*entity.Partition{}, errors.New("length of GetPartitionNames or GetInMemoryPercentages is 0")
 	}

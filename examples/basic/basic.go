@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -12,7 +13,7 @@ import (
 // basic milvus operation example
 func main() {
 	// Milvus instance proxy address, may verify in your env/settings
-	milvusAddr := `localhost:19530`
+	milvusAddr := `10.101.32.24:19530`
 
 	// setup context for client creation, use 2 seconds here
 	ctx := context.Background()
@@ -78,12 +79,15 @@ func main() {
 	// show collection partitions
 	partitions, err := c.ShowPartitions(ctx, collectionName)
 	if err != nil {
-		log.Fatal("failed to show partitions:", err.Error())
+		fmt.Println("failed to show partitions:", err.Error())
 	}
-	for _, partition := range partitions {
-		// print partition info, the shall be a default partition for out collection
-		log.Printf("partition id: %d, name: %s\n", partition.ID, partition.Name)
+	if len(partitions)!=0{
+		for _, partition := range partitions {
+			// print partition info, the shall be a default partition for out collection
+			log.Printf("partition id: %d, name: %s\n", partition.ID, partition.Name)
+		}
 	}
+
 
 	partitionName := "new_partition"
 	// now let's try to create a partition
@@ -94,12 +98,13 @@ func main() {
 
 	log.Println("After create partition")
 	// show collection partitions, check creation
-	partitions, err = c.ShowPartitions(ctx, collectionName)
-	if err != nil {
-		log.Fatal("failed to show partitions:", err.Error())
+	partitions, errN := c.ShowPartitions(ctx, collectionName)
+	if errN != nil {
+		fmt.Println("failed to show partitions:", errN.Error())
 	}
+
 	for _, partition := range partitions {
-		log.Printf("partition id: %d, name: %s\n", partition.ID, partition.Name)
+		fmt.Println("partition id: %d, name: %s\n", partition.ID, partition.Name)
 	}
 
 	// clean up our mess

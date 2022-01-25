@@ -267,7 +267,7 @@ func (c *grpcClient) HasCollection(ctx context.Context, collName string) (bool, 
 	return resp.GetValue(), nil
 }
 
-// GetCollectionStatistcis show collection statistics
+// GetCollectionStatistics show collection statistics
 func (c *grpcClient) GetCollectionStatistics(ctx context.Context, collName string) (map[string]string, error) {
 	if c.service == nil {
 		return nil, ErrClientNotReady

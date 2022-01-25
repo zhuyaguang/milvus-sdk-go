@@ -16,7 +16,7 @@ import (
 
 func main() {
 	// Milvus instance proxy address, may verify in your env/settings
-	milvusAddr := `localhost:19530`
+	milvusAddr := `10.101.32.24:19530`
 
 	// setup context for client creation, use 2 seconds here
 	ctx := context.Background()
@@ -152,7 +152,9 @@ func main() {
 	}
 
 	// Now add index
-	idx, err := entity.NewIndexIvfFlat(entity.L2, 2)
+	 //idx, err := entity.NewIndexIvfFlat(entity.L2, 2)
+	//idx, err := entity.NewIndexHNSW(entity.L2, 16,40)
+	idx, err := entity.NewIndexHNSW2(entity.L2, 16,40)
 	if err != nil {
 		log.Fatal("fail to create ivf flat index:", err.Error())
 	}
@@ -182,7 +184,7 @@ type film struct {
 }
 
 func loadFilmCSV() ([]film, error) {
-	f, err := os.Open("../films.csv") // assume you are in examples/insert folder, if not, please change the path
+	f, err := os.Open("/Users/zhuyaguang/milvus-sdk-go/examples/index/films.csv") // assume you are in examples/insert folder, if not, please change the path
 	if err != nil {
 		return []film{}, err
 	}
