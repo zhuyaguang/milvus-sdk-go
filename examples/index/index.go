@@ -120,6 +120,7 @@ func main() {
 
 	searchFilm := films[0] // use first fim to search
 	vector := entity.FloatVector(searchFilm.Vector[:])
+	fmt.Println("=====",searchFilm.Vector[:])
 	sp, _ := entity.NewIndexFlatSearchParam(10)
 	start := time.Now()
 	sr, err := c.Search(ctx, collectionName, []string{}, "Year > 1990", []string{"ID"}, []entity.Vector{vector}, "Vector",
@@ -166,10 +167,32 @@ func main() {
 
 	// do search again
 	start = time.Now()
-	sr, err = c.Search(ctx, collectionName, []string{}, "Year > 1990", []string{"ID"}, []entity.Vector{vector}, "Vector",
+	sr2, err := c.Search(ctx, collectionName, []string{}, "Year > 1990", []string{"ID"}, []entity.Vector{vector}, "Vector",
 		entity.L2, 10, sp)
 	if err != nil {
 		log.Fatal("fail to search collection:", err.Error())
+	}
+	for _, result := range sr2 {
+		var idColumn *entity.ColumnInt64
+		for _, field := range result.Fields {
+			if field.Name() == "ID" {
+				c, ok := field.(*entity.ColumnInt64)
+				if ok {
+					idColumn = c
+				}
+			}
+		}
+		if idColumn == nil {
+			log.Fatal("result field not math")
+		}
+		for i := 0; i < result.ResultCount; i++ {
+			id, err := idColumn.ValueByIdx(i)
+			if err != nil {
+				log.Fatal(err.Error())
+			}
+			title := idTitle[id]
+			fmt.Printf("file id: %d title: %s scores: %f\n", id, title, result.Scores[i])
+		}
 	}
 	log.Println("search with index time elapsed:", time.Since(start))
 
